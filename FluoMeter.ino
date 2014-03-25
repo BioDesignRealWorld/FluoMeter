@@ -33,7 +33,7 @@
 #include <math.h>
 #include "Counter.h"
 
-#define TIMER_LENGTH 10000
+#define TIMER_LENGTH 30000
 #define AVG_LEN 1
 #define PBS 807200.0
 #define led_on() digitalWrite(pinLed, LOW);
