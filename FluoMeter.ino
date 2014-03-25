@@ -66,7 +66,8 @@ void button_interrupt()
 void setup()
 {
   // setup serial com
-  Serial.begin(57600);
+  // CRAZY
+  Serial.begin(9600);
   Serial.println("Hello world.");
   
   // prepare pin LED
