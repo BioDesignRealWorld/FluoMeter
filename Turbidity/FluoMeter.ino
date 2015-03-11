@@ -3,7 +3,7 @@
 #include <LiquidCrystal.h>   
 #include "Counter.h"
 
-#define TIMER_LENGTH 30000   // Time (in milliseconds) of measurement with the blue light for GFP fluorescence quantification
+#define TIMER_LENGTH 10000   // Time (in milliseconds) of measurement with the blue light for GFP fluorescence quantification
 #define TIMER_LENGTH2 300    // Time (in milliseconds) of measurement with the red light for turbidity quantification
 #define AVG_LEN 1
 #define PBS 807200.0
@@ -95,6 +95,10 @@ void setup()
   // Set up the LCD's number of columns and rows: 
   lcd.begin(8, 2);
   
+  // Set up the Serial output dialog box
+  Serial.begin(9600);
+
+  
   // Prepare pin LED
   pinMode(pinLed, OUTPUT);
   led_off();
@@ -139,6 +143,8 @@ void loop()
     lcd.print("Count: ");
     lcd.setCursor(0,1);          // Jump to next line
     lcd.print(count);
+    Serial.print("FLUO: ");
+    Serial.println(count);
     
     // Turn blue led off
     led_off();
@@ -162,6 +168,9 @@ void loop()
     lcd.print("Count2: ");
     lcd.setCursor(0,1);          // Jump to next line
     lcd.print(count);
+    Serial.print("TURB: ");
+    Serial.println(count);
+
     
     // Turn red light off
     led2_off();
