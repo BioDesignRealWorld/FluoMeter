@@ -3,7 +3,7 @@
 #include <LiquidCrystal.h>   
 #include "Counter.h"
 
-#define TIMER_LENGTH 30000   // Time (in milliseconds) of measurement with the blue light for GFP fluorescence quantification
+#define TIMER_LENGTH 60000   // Time (in milliseconds) of measurement with the blue light for GFP fluorescence quantification
 #define TIMER_LENGTH2 300    // Time (in milliseconds) of measurement with the red light for turbidity quantification
 #define AVG_LEN 1
 #define PBS 807200.0
@@ -53,6 +53,7 @@ void StartFluo()
     
     // Print that we've started counting
     lcd.begin(8, 2);          // Initialize screen
+    lcd.clear();
     lcd.print("Start");
     lcd.setCursor(0, 1);      // Jump to next line
     lcd.print("Counting");
@@ -75,10 +76,10 @@ void StartTurb()
     state = COUNT;
     
     // Print that we've started counting
-    lcd.begin(8, 2);          // Initialize screen
-    lcd.print("Start2");
-    lcd.setCursor(0, 1);      // Jump to next line
-    lcd.print("Counting2");
+    //lcd.begin(8, 2);          // Initialize screen
+    //lcd.print("Start2");
+    //lcd.setCursor(0, 1);      // Jump to next line
+    //lcd.print("Counting2");
     
     // Turn red led on
     led2_on();
@@ -136,8 +137,9 @@ void loop()
     
     // Print result
     lcd.begin(8,2);              // Initialize screen
-    lcd.print("Count: ");
-    lcd.setCursor(0,1);          // Jump to next line
+    lcd.clear();
+    //lcd.print("Count: ");
+    //lcd.setCursor(0,1);          // Jump to next line
     lcd.print(count);
     
     // Turn blue led off
@@ -158,8 +160,8 @@ void loop()
     long count = hwc2.count();
     
     // Print results
-    lcd.begin(8,2);              // Initialize screen
-    lcd.print("Count2: ");
+    //lcd.begin(8,2);              // Initialize screen
+    //lcd.print("Count2: ");
     lcd.setCursor(0,1);          // Jump to next line
     lcd.print(count);
     
