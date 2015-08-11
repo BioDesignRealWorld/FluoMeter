@@ -3,7 +3,7 @@
 #include <LiquidCrystal.h>   
 #include "Counter.h"
 
-#define TIMER_LENGTH 60000   // Time (in milliseconds) of measurement with the blue light for GFP fluorescence quantification
+#define TIMER_LENGTH 30000   // Time (in milliseconds) of measurement with the blue light for GFP fluorescence quantification
 #define TIMER_LENGTH2 300    // Time (in milliseconds) of measurement with the red light for turbidity quantification
 #define AVG_LEN 1
 #define PBS 807200.0
