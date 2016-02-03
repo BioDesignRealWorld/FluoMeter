@@ -1,0 +1,7 @@
+.DS_Store
+*.?#[0-9]
+*.?##
+*.scr
+*epf
+*.dri
+*.gpi
