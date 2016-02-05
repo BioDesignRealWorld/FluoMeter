@@ -21,8 +21,8 @@ int button1 = 2;
 int button1_int = 0;
 
 // state variables
-enum State { IDLE, COUNT_BLUE, COUNT_RED, COUNT_NOISE };
-State state = IDLE;
+enum State { NIL, IDLE, COUNT_BLUE, COUNT_RED, COUNT_NOISE };
+State state = NIL;
 
 // Counter functions, we have one separate counter for each state of the system.
 HardwareCounter hwc(pinCounter, TIMER_BLUE);
@@ -59,11 +59,13 @@ void setup()
   digitalWrite(blue_led, LED_OFF);
   pinMode(red_led, OUTPUT);
   digitalWrite(red_led, LED_OFF);
-  
+
   // Prepare the button
   pinMode(button1, INPUT);
   digitalWrite(button1, HIGH);
   attachInterrupt(button1_int, button_pressed, FALLING);
+
+  state = IDLE;
 
   // LCD start
   lcd.begin(8,2);
