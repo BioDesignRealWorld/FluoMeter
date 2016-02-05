@@ -49,33 +49,26 @@ void HardwareCounter::start()
 {
   // set pin as digital input
   pinMode(_pin, INPUT);
-  // hardware counter setup ( refer atmega168.pdf chapter 16-bit counter1)
-  TCCRnA=0;     // reset timer/countern control register A
-  TCCRnB=0;     // reset timer/countern control register A
 
-  // set timer/counter1 hardware as counter , counts events on pin Tn ( arduino pin 5 on 168, pin 47 on Mega )
-  // normal mode, wgm10 .. wgm13 = 0
-  sbi (TCCRnB ,CS10);  // External clock source on Tn pin. Clock on rising edge.
-  sbi (TCCRnB ,CS11);
-  sbi (TCCRnB ,CS12);
-  // start counting now
-  TCCRnB = TCCRnB | 7;  //  Counter Clock source = pin Tn , start counting now
+  // hardware counter setup ( refer atmega168.pdf chapter 16-bit counter1)
+  TIMSKn = 0; // disable overflow interrupt
+  TCCRnA = 0;     // reset timer/countern control register A
+  TCCRnB = 0;     // reset timer/countern control register A
+
+  // Reset the counter to zero
+  TCNTn = 0;      // counter register value = 0
+  g_ovf_n = 0;    // reset number of overflows
+  _count = 0;     // set count to zero (optional)
 
   // set overflow interrupt
-  TIMSKn |= _BV(TOIEn);
+  TIFR1 |= 1;            // clear overflow interrupt flag
+  TIMSKn |= _BV(TOIEn);  // enable overflow interrupt
 
   // set start time
   _start_time = millis();
   
-  // The counter needs to be reset after
-  // the counter is setup (This is important)!
-  TCNTn=0;      // counter value = 0
-
-  // reset number of overflow
-  g_ovf_n = 0;
-
-  // set count to zero (optional)
-  _count = 0;
+  // start counting now
+  TCCRnB = _BV(CS10) | _BV(CS11) | _BV(CS12);  //  Counter Clock source = pin Tn , start counting now
 }
 
 // call this to read the current count and save it
@@ -85,6 +78,7 @@ unsigned long HardwareCounter::count()
   TCCRnB = TCCRnB & ~7;   // Gate Off  / Counter Tn stopped
   _count = TCNTn;         // Set the count in object variable
   TCCRnB = TCCRnB | 7;    // restart counting
+
   return 0xfffful*g_ovf_n + _count;
 }
 
