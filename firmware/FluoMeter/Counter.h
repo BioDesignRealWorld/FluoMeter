@@ -43,6 +43,8 @@
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
+#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
+// All the register definition for the Arduino UNO and similar
 #define TCCRnA TCCR1A
 #define TCCRnB TCCR1B
 #define TCNTn  TCNT1
@@ -51,6 +53,19 @@
 #define TIMSKn TIMSK1
 #define TOIEn  TOIE1
 #define TIMERn_OVF_vect TIMER1_OVF_vect
+#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+// Register definition for Arduino Mega and similar
+#define TCCRnA TCCR5A
+#define TCCRnB TCCR5B
+#define TCNTn  TCNT5
+#define TIFRn  TIFR5
+#define TOVn   TOV5
+#define TIMSKn TIMSK5
+#define TOIEn  TOIE5
+#define TIMERn_OVF_vect TIMER5_OVF_vect
+#else
+
+#endif
 
 // Defining the Class for the counter
 class HardwareCounter
